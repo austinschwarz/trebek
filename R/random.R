@@ -35,33 +35,4 @@ get_trivia_qs <- function(num_questions=1) {
   }
 }
 
-#' Gets question based off value and category from API
-#'
-#' @param value pts the question is worth (int)
-#' @param category category the question will belong to (int)
-#'
-#' @import dplyr
-#' @import httr
-#' @importFrom jsonlite fromJSON
-#'
-#' @export
 
-get_q <- function(value,category) {
-
-  request <- GET("http://jservice.io/api/clues",query=list(value=value,category=category))
-
-  content <- (request$content %>% rawToChar() %>% fromJSON())
-
-  rand_seed <- floor(runif(1,0,nrow(content)))
-
-  q <- content[rand_seed,]
-
-  print(paste("Category: ", q$category$title))
-
-  print(q$question)
-
-  menu(c("Yes"), title="Ready to see answer?")
-
-  print(q$answer)
-
-}
