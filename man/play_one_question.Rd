@@ -8,12 +8,12 @@ selecting category and value, showing question, and showing answer}
 play_one_question(questions, category_ids)
 }
 \arguments{
-\item{questions}{questions board.}
+\item{questions}{questions board as a data frame.}
 
 \item{category_ids}{id numbers of categories corresponding to questions board columns.}
 }
 \value{
-updated questions board
+updated questions board as a data frame
 }
 \description{
 Goes through one round of jeopardy

@@ -15,6 +15,7 @@ random_jeopardy <- function(num_questions=1) {
   request <- GET("http://jservice.io/api/random",query=list(count=num_questions))
 
   content <- (request$content %>% rawToChar() %>% fromJSON())
+  content <- merge(content, content$category, by.x = 'category_id', by.y = 'id')
 
   for (row in 1:nrow(content)){
 
@@ -54,7 +55,7 @@ wait <- function(to = "") {
 display_question <- function(question) {
 
   cat(paste(
-    question$category,
+    '"', question$title, '"',
     ' for ', question$value, ':\n',
     question$question %>%
       strwrap(., simplify = FALSE) %>%

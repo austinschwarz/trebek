@@ -24,7 +24,14 @@ jeopardy_question_search = function(value=NULL, category=NULL, min_date=NULL, ma
   if (!is.null(max_date)){
     max_date = anytime(max_date)
   }
-  request = GET('http://jservice.io/api/clues', query = list(value=value, category = category, max_date = min_date, min_date=max_date))
+  request = GET(
+    'http://jservice.io/api/clues',
+    query = list(
+      value=value,
+      category = category,
+      max_date = max_date,
+      min_date = min_date
+    ))
   content = request$content %>% rawToChar() %>% fromJSON()
   if (length(content) == 0) {
     cat("No questions fit that criteria\n")
@@ -56,10 +63,10 @@ clean_data = function(data){
 
   data = merge(data, data$category, by.x = "category_id", by.y = "id")
   data$category = data$title
-  data = select(data, value, question, answer, airdate, category)
+  data = select(data, value, question, answer, airdate, category, category_id)
   data$airdate = gsub("T12:00:00.000Z", "", x=data$airdate)
   data$answer = gsub("<i>", "", x=data$answer)
   data$answer = gsub("</i>","", x = data$answer)
-  return(data)
+  return(unique(data))
 }
 

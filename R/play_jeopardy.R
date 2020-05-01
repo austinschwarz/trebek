@@ -17,6 +17,26 @@ play_jeopardy <- function(n_categories = 6) {
   wait("start")
   cat("\nHere's the board:\n\n")
 
+  questions_info <- get_board(n_categories)
+  questions <- questions_info$questions
+  category_ids <- questions_info$category_ids
+
+  # play game
+  print(questions)
+  cat('\n')
+  while(sum(questions!='X') > 0) {
+    questions <- play_one_question(questions, category_ids)
+    print(questions)
+  }
+
+}
+
+#' Builds a question board with random categories
+#'
+#' @param n_categories number of categories on the board
+#'
+#' @return a questions board as a data frame
+get_board <- function(n_categories) {
   # get six random categories
   offset <- sample(1:18410, 1)
   cat_request <- GET(
@@ -42,24 +62,19 @@ play_jeopardy <- function(n_categories = 6) {
     mutate(values = paste('$', values, sep = '')) %>%
     column_to_rownames('values')
 
-  # play game
-  print(questions)
-  cat('\n')
-  while(sum(questions!='X') > 0) {
-    questions <- play_one_question(questions, category_ids)
-    print(questions)
-  }
-
+  list(
+    'questions' = questions,
+    'category_ids' = category_ids
+  )
 }
-
 
 #' Goes through one round of jeopardy
 #' selecting category and value, showing question, and showing answer
 #'
-#' @param questions questions board.
+#' @param questions questions board as a data frame.
 #' @param category_ids id numbers of categories corresponding to questions board columns.
 #'
-#' @return updated questions board
+#' @return updated questions board as a data frame
 #'
 #' @importFrom httr GET
 #' @importFrom jsonlite fromJSON
@@ -96,8 +111,9 @@ play_one_question <- function(questions, category_ids) {
   value_num <- str_remove(value, '\\$') %>% as.numeric()
 
   # find the question
-  q_response <- question_search(value = value_num, category = category)
+  q_response <- jeopardy_question_search(value = value_num, category = category)
   q <- data.frame(q_response)[sample(1:nrow(q_response), 1),]
+  q$title <- q$category
 
   display_question(q)
 
