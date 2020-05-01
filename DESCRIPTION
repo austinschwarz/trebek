@@ -19,5 +19,5 @@ Suggests:
 Imports: 
     magrittr,
     httr,
-    dplyr,
-    jsonlite
+    jsonlite,
+    dplyr
