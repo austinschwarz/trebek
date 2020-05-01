@@ -1,4 +1,4 @@
-#' Gets random questions from the API
+#' Gets random jeopardy questions from the API
 #'
 #' @param num_questions number of question you want returned
 #'
@@ -10,7 +10,7 @@
 #'
 #' @export
 
-get_trivia_qs <- function(num_questions=1) {
+random_jeopardy <- function(num_questions=1) {
 
   request <- GET("http://jservice.io/api/random",query=list(count=num_questions))
 
@@ -20,19 +20,55 @@ get_trivia_qs <- function(num_questions=1) {
 
     q <- content[row,]
 
-    print(paste("Category: ", q$category$title))
-
-    print(q$question)
-
-    menu(c("Yes"), title="Ready to see answer?")
-
-    print(q$answer)
+    display_question(q)
+    # cat(paste("Category: ", q$category$title))
+    #
+    # cat(q$question)
+    #
+    # wait("to see answer")
+    #
+    # cat(q$answer)
 
     if (!row == nrow(content)){
 
-      menu(c("Yes"), title="Ready for next question?")
+      wait("for next question")
     }
   }
 }
 
+#' Waits for enter key before continuing
+#'
+#' @param to what will happen after you press enter. Default empty string.
+#'
+#' @return None
+wait <- function(to = "") {
+  ready <- readline(prompt = paste('Press Enter', to))
+}
+
+
+#' Displays the question in a standardized format
+#'
+#' @param question a question as a row of a data frame.
+#'
+#' @return None
+display_question <- function(question) {
+
+  cat(paste(
+    question$category,
+    ' for ', question$value, ':\n',
+    question$question %>%
+      strwrap(., simplify = FALSE) %>%
+      unlist() %>%
+      paste(collapse = '\n'),
+    '\n\n',
+    sep = ''
+  ))
+
+  wait("see answer")
+
+  cat(paste(
+    'What is ', question$answer, '?\n\n',
+    sep = ''
+  ))
+}
 

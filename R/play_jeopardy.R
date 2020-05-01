@@ -1,4 +1,5 @@
-#' Displays a jeopardy board that a user can select questions from
+#' Interactive game of jeopardy, where user can select which value/category
+#' questions they'd like to answer.
 #'
 #' @param n_categories How many categories in the Jeopardy table. Default is 6.
 #'
@@ -10,7 +11,6 @@
 #' @importFrom textshape column_to_rownames
 #'
 #' @export
-
 play_jeopardy <- function(n_categories = 6) {
   show_intro()
 
@@ -18,10 +18,10 @@ play_jeopardy <- function(n_categories = 6) {
   cat("\nHere's the board:\n\n")
 
   # get six random categories
-  off <- sample(1:18410, 1)
+  offset <- sample(1:18410, 1)
   cat_request <- GET(
     "http://jservice.io/api/categories",
-    query=list(count=n_categories, offset=off)
+    query=list(count=n_categories, offset=offset)
   )
   cat_response <- cat_request$content %>%
     rawToChar() %>%
@@ -53,7 +53,8 @@ play_jeopardy <- function(n_categories = 6) {
 }
 
 
-#' Displays a jeopardy board that a user can select questions from
+#' Goes through one round of jeopardy
+#' selecting category and value, showing question, and showing answer
 #'
 #' @param questions questions board.
 #' @param category_ids id numbers of categories corresponding to questions board columns.
@@ -63,7 +64,6 @@ play_jeopardy <- function(n_categories = 6) {
 #' @importFrom httr GET
 #' @importFrom jsonlite fromJSON
 #' @importFrom stringr str_remove
-
 play_one_question <- function(questions, category_ids) {
   # get question as user input
   question <- NA
@@ -96,32 +96,12 @@ play_one_question <- function(questions, category_ids) {
   value_num <- str_remove(value, '\\$') %>% as.numeric()
 
   # find the question
-  q_request <- httr::GET(
-    "http://jservice.io/api/clues",
-    query=list(category = category, value = value_num)
-  )
-  q_response <- q_request$content %>% rawToChar() %>% fromJSON() %>% data.frame
+  q_response <- question_search(value = value_num, category = category)
   q <- data.frame(q_response)[sample(1:nrow(q_response), 1),]
 
-  cat(paste(
-    q$category$title,
-    ' for ', value, ':\n',
-    q$question %>%
-      strwrap(., simplify = FALSE) %>%
-      unlist() %>%
-      paste(collapse = '\n'),
-    '\n\n',
-    sep = ''
-  ))
+  display_question(q)
 
-  wait("see answer")
-
-  cat(paste(
-    'What is ', q$answer, '?\n\n',
-    sep = ''
-  ))
-
-  wait("continue")
+  wait("to continue")
 
   questions
 }
@@ -130,7 +110,6 @@ play_one_question <- function(questions, category_ids) {
 #'
 #' @return None
 #'
-
 show_intro <- function() {
   cat("\n\nTHIS IS...")
 
@@ -151,9 +130,3 @@ show_intro <- function() {
     sep = '\n'
   ))
 }
-
-
-wait <- function(to = "") {
-  ready <- readline(prompt = paste('Press Enter', to))
-}
-
