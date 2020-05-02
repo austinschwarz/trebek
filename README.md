@@ -4,7 +4,9 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of trebek is to ...
+The goal of trebek is to have access to jeopardy questions, using the [jservice.io](http://jservice.io) API created by [sottenad](https://github.com/sottenad/jService). 
+
+Our main functions allow you to display **random jeopardy questions**, **query categories**, and **query questions**, as well as **play your own game of Jeopardy**!
 
 ## Installation
 
@@ -16,23 +18,23 @@ install.packages("trebek")
 
 ## Examples
 
-If you want to see a random jeopardy question
+#### If you want to see a random jeopardy question
 ``` r
 library(trebek)
 random_jeopardy()
 ```
 
-For more than one random question
+#### For more than one random question
 ``` r
 random_jeopardy(5)
 ```
 
-To see all jeopardy questions in the year 2007 worth $400
+#### To see all jeopardy questions in the year 2007 worth $400
 ``` r
 jeopardy_question_search(min_date = '2007-01-01', max_date = '2007-12-31', value = 400)
 ```
 
-If you want to see all of your category options with "pants" as a substring
+#### If you want to see all of your category options with "pants" as a substring
 ``` r
 category_search("pants")
 ```
@@ -44,7 +46,7 @@ category_search("pants")
 4 10215 i'm not wearing any pants           5
 ```
 
-To see the jeopardy questions in the category "i'm not wearing any pants"
+#### To see the jeopardy questions in the category "i'm not wearing any pants"
 ``` r
 jeopardy_question_search(category = 10215)
 ```
