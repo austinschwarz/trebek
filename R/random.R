@@ -52,6 +52,8 @@ wait <- function(to = "") {
 #' @param question a question as a row of a data frame.
 #'
 #' @return None
+#'
+#' @export
 display_question <- function(question) {
 
   cat(paste(
