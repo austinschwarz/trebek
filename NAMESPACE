@@ -2,6 +2,7 @@
 
 export("%>%")
 export(category_search)
+export(display_question)
 export(jeopardy_question_search)
 export(play_jeopardy)
 export(random_jeopardy)
