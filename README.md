@@ -10,17 +10,19 @@ Our main functions allow you to display **random jeopardy questions**, **query c
 
 ## Installation
 
-You can install the released version of trebek from [CRAN](https://CRAN.R-project.org) with:
+You can install trebek from github with:
 
 ``` r
-install.packages("trebek")
+library(devtools)
+install_github("taustinschwarz/trebek")
+
+library(trebek)
 ```
 
 ## Examples
 
 #### If you want to see a random jeopardy question
 ``` r
-library(trebek)
 random_jeopardy()
 ```
 
