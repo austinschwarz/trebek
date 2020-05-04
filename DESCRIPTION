@@ -2,7 +2,7 @@ Package: trebek
 Version: 0.0.0.9000
 Title: What the Package Does (One Line, Title Case)
 Description: What the package does (one paragraph).
-Authors@R: c(person("Jenna", "Landy", email = "jlandy@calpoly.edu", role = c("aut")),person("Austin","Schwarz", email="auschwar@calpoly.edu", role = c("aut","cre"),person("Mitchell","Buchan", email="mjbuchan@calpoly.edu", role=c("aut"))
+Authors@R: c(person("Jenna", "Landy", email = "jlandy@calpoly.edu", role = c("aut")),person("Austin","Schwarz", email="auschwar@calpoly.edu", role = c("aut","cre")),person("Mitchell","Buchan", email="mjbuchan@calpoly.edu", role=c("aut")))
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a license
 Encoding: UTF-8
 LazyData: true
