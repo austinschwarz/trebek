@@ -14,7 +14,7 @@ You can install trebek from github with:
 
 ``` r
 library(devtools)
-install_github("taustinschwarz/trebek")
+install_github("austinschwarz/trebek")
 
 library(trebek)
 ```
