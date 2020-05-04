@@ -9,7 +9,6 @@
 #' @importFrom jsonlite fromJSON
 #'
 #' @export
-
 random_jeopardy <- function(num_questions=1) {
 
   request <- GET("http://jservice.io/api/random",query=list(count=num_questions))
@@ -22,13 +21,6 @@ random_jeopardy <- function(num_questions=1) {
     q <- content[row,]
 
     display_question(q)
-    # cat(paste("Category: ", q$category$title))
-    #
-    # cat(q$question)
-    #
-    # wait("to see answer")
-    #
-    # cat(q$answer)
 
     if (!row == nrow(content)){
 
@@ -67,7 +59,7 @@ display_question <- function(question) {
     sep = ''
   ))
 
-  wait("see answer")
+  wait("to see answer")
 
   cat(paste(
     'What is ', question$answer, '?\n\n',
