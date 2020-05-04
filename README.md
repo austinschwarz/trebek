@@ -30,7 +30,7 @@ random_jeopardy()
 In the Harry Potter books, Winky, Kreacher & Dobby are this
 type of elf belonging to wizarding families
 
-Press Enter see answer
+Press Enter to see answer
 What is house elves?
 ```
 
@@ -43,7 +43,7 @@ random_jeopardy(5)
 Mission: this 10-letter word meaning hopelessly difficult;
 the clue will self-destruct in one second
 
-Press Enter see answer
+Press Enter to see answer
 What is impossible?
 
 Press Enter for next question
